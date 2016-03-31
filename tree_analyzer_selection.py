@@ -201,7 +201,7 @@ def tree_selection(file_string, isData=0, dataset="", cross_section=1.,bbtag_cut
 						s1[0]=count_fatjets
 						m1[0]=0.
 						t1[0]=tree.evt
-						u1[0]=0.
+						u1[0]=tree.boosted_evt
 						MyTree.Fill()
 
 	MyTree.Write()
