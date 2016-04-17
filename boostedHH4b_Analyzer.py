@@ -72,9 +72,14 @@ def boosted_analyzer(file_string, isData=0, dataset="", cross_section=1.,systema
 	f_evt=array.array('f', [0.])
 	f_mass=array.array('f', [0.])
 	f_mass_corr=array.array('f', [0.])
+	f_mass_corr2=array.array('f', [0.])
 	htJet40eta3=array.array('f', [0.])
 	trigPass=array.array('f', [0.])
 	event_flavour=array.array('f', [0.])
+	subjet_btag0=array.array('f', [0.])
+	subjet_btag1=array.array('f', [0.])
+	subjet_btag2=array.array('f', [0.])
+	subjet_btag3=array.array('f', [0.])
 	#branches for fatjets
 	fb_1=MyTree2.Branch("fatjet1_pt", fatjet_pt,"fatjet1_pt")	
 	fb_2=MyTree2.Branch("fatjet1_mpruned", fatjet_mpruned, "fatjet1_mpruned")
@@ -98,6 +103,13 @@ def boosted_analyzer(file_string, isData=0, dataset="", cross_section=1.,systema
 	
 	fb_20=MyTree2.Branch("fatjet1_mprunedcorr", fatjet_mpruned_corr, "fatjet1_mprunedcorr")
 	fb_21=MyTree2.Branch("fatjet2_mprunedcorr", fatjet2_mpruned_corr, "fatjet2_mprunedcorr")
+	
+	fb_22=MyTree2.Branch("subjet_btag0", subjet_btag0, "subjet_btag0")
+	fb_23=MyTree2.Branch("subjet_btag1", subjet_btag1, "subjet_btag1")
+	fb_24=MyTree2.Branch("subjet_btag2", subjet_btag2, "subjet_btag2")
+	fb_25=MyTree2.Branch("subjet_btag3", subjet_btag3, "subjet_btag3")
+	
+	fb_26=MyTree2.Branch("inv_mass_sub", f_mass_corr2, "inv_mass_sub")
 #	print tree
 	maxi=tree.GetEntries()
 	for entry in range(maxi):
@@ -149,18 +161,48 @@ def boosted_analyzer(file_string, isData=0, dataset="", cross_section=1.,systema
 						f_puw[0]=puWeight
 						f_norm[0]=norm
 						f_evt[0]=tree.evt
-						
+
+
 						fj_0=TLorentzVector()					
 						fj_0.SetPtEtaPhiM(tree.FatjetAK08ungroomed_pt[0], tree.FatjetAK08ungroomed_eta[0], tree.FatjetAK08ungroomed_phi[0], tree.FatjetAK08ungroomed_mass[0])
 						fj_1=TLorentzVector()					
 						fj_1.SetPtEtaPhiM(tree.FatjetAK08ungroomed_pt[1], tree.FatjetAK08ungroomed_eta[1], tree.FatjetAK08ungroomed_phi[1], tree.FatjetAK08ungroomed_mass[1])
 						f_mass[0]=((fj_0+fj_1).M())
 						f_mass_corr[0] = ((fj_0+fj_1).M()) - (fatjet_mpruned[0]-125)-(fatjet2_mpruned[0]-125)
-
+						f_mass_corr2[0] = ((fj_0+fj_1).M()) - (fatjet_mpruned_corr[0]-125)-(fatjet2_mpruned_corr[0]-125)
 						htJet40eta3[0] = ht_
 						trigPass[0]=tree.HLT_BIT_HLT_PFHT800_v
+						
+						#matching#
+						sj_0=TLorentzVector()
+						s_index0=-1
+						s_index1=-1
+						s_index2=-1
+						s_index3=-1
+						for s in range(tree.nSubjetAK08softdrop):
+							sj_0.SetPtEtaPhiM(tree.SubjetAK08softdrop_pt[s], tree.SubjetAK08softdrop_eta[s], tree.SubjetAK08softdrop_phi[s], tree.SubjetAK08softdrop_mass[s])
+							deltar=sj_0.DeltaR(fj_0)
+							if (s_index0==-1 and deltar<0.5):
+								s_index0=s
+							elif (s_index1==-1 and deltar<0.5):
+								s_index1=s
+							deltar=sj_0.DeltaR(fj_1)
+							if (s_index2==-1 and deltar<0.5):
+								s_index2=s
+							elif (s_index3==-1 and deltar<0.5):
+								s_index3=s
+						subjet_btag0[0]=-1
+						subjet_btag1[0]=-1
+						subjet_btag2[0]=-1
+						subjet_btag3[0]=-1
+						if s_index0>-1: subjet_btag0[0]=tree.SubjetAK08softdrop_btag[s_index0]
+						if s_index1>-1: subjet_btag1[0]=tree.SubjetAK08softdrop_btag[s_index1]
+						if s_index2>-1: subjet_btag2[0]=tree.SubjetAK08softdrop_btag[s_index2]
+						if s_index3>-1: subjet_btag3[0]=tree.SubjetAK08softdrop_btag[s_index3]
 						event_flavour[0]=-100
-						if tree.FatjetAK08ungroomed_BhadronFlavour[0]>=2:
+						if isData==1:
+							event_flavour[0]=-1
+						elif tree.FatjetAK08ungroomed_BhadronFlavour[0]>=2:
 							if tree.FatjetAK08ungroomed_BhadronFlavour[1]>=2:
 								print "2b-2b"
 								event_flavour[0]=20
