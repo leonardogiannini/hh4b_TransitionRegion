@@ -49,7 +49,7 @@ def boosted_analyzer(file_string, isData=0, dataset="", cross_section=1.,systema
 	print norm , "la normalizzazione"
 	xsec=cross_section
 	print xsec, "cross_section"
-	AnaysisFile_boosted=TFile("presel_Leo_"+file_string.split("/")[-1], "recreate")
+	AnaysisFile_boosted=TFile("presel_silver_"+file_string.split("/")[-1], "recreate")
 	
 	MyTree2 = TTree("MyTree2", "MyTree2")
 	#transition region variables	
@@ -80,6 +80,12 @@ def boosted_analyzer(file_string, isData=0, dataset="", cross_section=1.,systema
 	subjet_btag1=array.array('f', [0.])
 	subjet_btag2=array.array('f', [0.])
 	subjet_btag3=array.array('f', [0.])
+	SF = array.array('f', [-100.0])
+	SFup = array.array('f', [-100.0])
+	SFdown = array.array('f', [-100.0])
+	jet1ID = array.array('f', [-100.0])
+	jet2ID = array.array('f', [-100.0])
+	
 	#branches for fatjets
 	fb_1=MyTree2.Branch("fatjet1_pt", fatjet_pt,"fatjet1_pt")	
 	fb_2=MyTree2.Branch("fatjet1_mpruned", fatjet_mpruned, "fatjet1_mpruned")
@@ -110,8 +116,16 @@ def boosted_analyzer(file_string, isData=0, dataset="", cross_section=1.,systema
 	fb_25=MyTree2.Branch("subjet_btag3", subjet_btag3, "subjet_btag3")
 	
 	fb_26=MyTree2.Branch("inv_mass_sub", f_mass_corr2, "inv_mass_sub")
-#	print tree
+	
+	MyTree2.Branch('SF', SF, 'SF')
+	MyTree2.Branch('SFup', SFup, 'SFup')
+	MyTree2.Branch('SFdown', SFdown, 'SFdown')
+	MyTree2.Branch('fatjet1_idTight', jet1ID, 'fatjet1_idTight')
+	MyTree2.Branch('fatjet2_idTight', jet2ID, 'fatjet2_idTight')
+
+	entries=TH1F("no_cut_entries", "",1,0,1)
 	maxi=tree.GetEntries()
+	entries.SetBinContent(1,maxi)
 	for entry in range(maxi):
 		if entry%100==0:
 
@@ -131,14 +145,14 @@ def boosted_analyzer(file_string, isData=0, dataset="", cross_section=1.,systema
 			if abs(tree.Jet_eta[i])<3 and tree.Jet_pt[i] >40 :
 				ht_=ht_+tree.Jet_pt[i]
 
-		if (tree.json==1):
+		if (tree.json_silver==1):
 #			print trigger_bit, tree.HLT_BIT_HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV0p45_v , tree.HLT_BIT_HLT_PFHT800_v , tree.HLT_HH4bHighLumi
 #			print (tree.HLT_BIT_HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV0p45_v>0 or tree.HLT_BIT_HLT_PFHT800_v>0 or tree.HLT_HH4bHighLumi>0)
 #			print (not(tree.HLT_BIT_HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV0p45_v>0) and not(tree.HLT_BIT_HLT_PFHT800_v>0) and tree.HLT_HH4bHighLumi>0)
 #			
 			if tree.nFatjetAK08ungroomed>1:
-				
-				if (abs(tree.FatjetAK08ungroomed_eta[0])<2.5 and abs(tree.FatjetAK08ungroomed_eta[1])<2.5):
+				id_tight=((tree.FatjetAK08ungroomed_id_Tight[0])==1 and (tree.FatjetAK08ungroomed_id_Tight[1])==1)
+				if (abs(tree.FatjetAK08ungroomed_eta[0])<2.5 and abs(tree.FatjetAK08ungroomed_eta[1])<2.5 ):
 					if abs(tree.FatjetAK08ungroomed_eta[0]-tree.FatjetAK08ungroomed_eta[1])<1.3:
 						fatjet_pt[0]=tree.FatjetAK08ungroomed_pt[0]
 						fatjet_mpruned[0]=tree.FatjetAK08ungroomed_mpruned[0]
@@ -195,6 +209,37 @@ def boosted_analyzer(file_string, isData=0, dataset="", cross_section=1.,systema
 						subjet_btag1[0]=-1
 						subjet_btag2[0]=-1
 						subjet_btag3[0]=-1
+						if fatjet_pt[0] < 400:
+							sf1 = 0.929
+							sf1change = 0.078
+						elif fatjet_pt[0] >= 400 and fatjet_pt[0] < 500:
+							sf1 = 0.999
+							sf1change = 0.126
+						elif fatjet_pt[0] >= 500 and fatjet_pt[0] < 600:
+							sf1 = 0.933
+							sf1change = 0.195
+						elif fatjet_pt[0] >= 600:
+							sf1 = 1.048
+							sf1change = 0.215
+
+						if fatjet2_pt[0] < 400:
+							sf2 = 0.929
+							sf2change = 0.078
+						elif fatjet2_pt[0] >= 400 and fatjet2_pt[0] < 500:
+							sf2 = 0.999
+							sf2change = 0.126
+						elif fatjet2_pt[0] >= 500 and fatjet2_pt[0] < 600:
+							sf2 = 0.933
+							sf2change = 0.195
+						elif fatjet2_pt[0] >= 600:
+							sf2 = 1.048
+							sf2change = 0.215
+						
+						SF[0] = sf1*sf2
+						SFup[0] = sf1*(1+sf1change)*sf2*(1+sf2change)
+						SFdown[0] = sf1*(1-sf1change)*sf2*(1-sf2change)
+						jet1ID[0]= tree.FatjetAK08ungroomed_id_Tight[0]
+						jet2ID[0]= tree.FatjetAK08ungroomed_id_Tight[1]
 						if s_index0>-1: subjet_btag0[0]=tree.SubjetAK08softdrop_btag[s_index0]
 						if s_index1>-1: subjet_btag1[0]=tree.SubjetAK08softdrop_btag[s_index1]
 						if s_index2>-1: subjet_btag2[0]=tree.SubjetAK08softdrop_btag[s_index2]
@@ -322,7 +367,7 @@ def boosted_analyzer(file_string, isData=0, dataset="", cross_section=1.,systema
 						
 						MyTree2.Fill()
 
-
+	entries.Write()
 	MyTree2.Write()
 	AnaysisFile_boosted.Close()
 
