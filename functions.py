@@ -105,32 +105,7 @@ def sort_by_mass_save_candidates(f_vars, j_vars, systematic):
                 correction_factor=div_except((pJERDown),f_vars[1][leading_index])
                 fj_p4*=correction_factor
                 
-                
-            =[tree.nFatjetAK08ungroomed, tree.FatjetAK08ungroomed_pt, tree.FatjetAK08ungroomed_eta, tree.FatjetAK08ungroomed_phi, tree.FatjetAK08ungroomed_mass, 
-#            5)tree.FatjetAK08ungroomed_mprunedcorr, 
-#            6)tree.FatjetAK08ungroomed_tau1, 7)tree.FatjetAK08ungroomed_tau2,
-#            8)tree.FatjetAK08ungroomed_bbtag, 
-#               9)tree.FatjetAK08ungroomed_mprunedcorr_UP, 10)tree.FatjetAK08ungroomed_JEC_L1L2L3, 
-#                11) tree.FatjetAK08ungroomed_JEC_UP, 12)tree.FatjetAK08ungroomed_JER_UP_PT ]
-
-            if (systematic=="FJEC_Up"):
-                correction_factor=1+(f_vars[11][leading_index]-f_vars[10][leading_index])
-                fj_p4*=correction_factor
-
-            if (systematic=="FJEC_Down"):
-                correction_factor=1-(f_vars[11][leading_index]-f_vars[10][leading_index])
-                fj_p4*=correction_factor
-
-            if (systematic=="FJER_Up"):
-                correction_factor=div_except(f_vars[12][leading_index],f_vars[1][leading_index])
-                fj_p4*=correction_factor
-
-            if (systematic=="FJER_Down"):
-                pJERDown=2*f_vars[1][leading_index]-f_vars[12][leading_index]
-                correction_factor=div_except((pJERDown),f_vars[1][leading_index])
-                fj_p4*=correction_factor
-
-
+          
    
             if (abs(fj_p4.Eta())<jet_eta_cut and f_vars[8][leading_index]>bbtag_cut and f_vars[5][leading_index]>40 and (f_vars[7][leading_index]/f_vars[6][leading_index])<tau21_cut):
                 count_fatjets=count_fatjets+1
