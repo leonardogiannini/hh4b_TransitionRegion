@@ -1,0 +1,31 @@
+Info in <TCanvas::Print>: png file Limits/sig600/hh4b2plus1_fit_s.png has been created
+Warning in <TFile::Append>: Replacing existing TH1: correlation_matrix (Potential memory leak).
+Info in <TCanvas::Print>: png file Limits/sig600/covariance_fit_s.png has been created
+h4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 17.8611 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 27.0425 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 21.0588 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 22.6305 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 13.1726 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 9.71275 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 8.44501 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 7.75365 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 7.39454 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 5.42858 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 1.5148 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 3.42598 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 1.57015 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 1.1732 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 1.93335 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 1.16159 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 0.394967 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 1.52557 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 1.12607 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 0.769082 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 0.404585 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 0.379811 with Poisson errors, interpolating between Poisson errors of adjacent integer
+[#0] WARNING:Plotting -- RooHist::addBin(hh4b2plus1_plot__CMS_th1x) WARNING: non-integer bin entry 0.375051 with Poisson errors, interpolating between Poisson errors of adjacent integer
+
+ --- MaxLikelihoodFit ---
+Best fit r: 0.0208115  -5.02081/+4.97919  (68% CL)
+nll S+B -> 0.0125171  nll B -> 0
+Done in 0.02 min (cpu), 0.03 min (real)
